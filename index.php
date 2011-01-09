@@ -8,12 +8,12 @@
         <meta name="author" content="Jáchym Toušek" />
         <meta name="copyright" content="2011 Jáchym Toušek" />
         <title>Gomoku</title>
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="bookmark icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-        <script src="js/jquery-1.4.4.js"></script>
-        <script src="js/class.js"></script>
-        <script src="js/script.js"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="bookmark icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+        <script src="/js/jquery-1.4.4.js"></script>
+        <script src="/js/class.js"></script>
+        <script src="/js/script.js"></script>
     </head>
     <body>
         <div id="new">
