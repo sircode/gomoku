@@ -4,7 +4,7 @@
 
 body {
     font-family: sans-serif;
-    background: silver;
+    background: #C4C4C4;
 }
 
 #new {
@@ -15,6 +15,7 @@ body {
     height: 300px;
     margin-top: -150px;
     margin-left: -100px;
-    background: #808080;
+    background: #DCDCDC;
     -moz-border-radius: 10px;
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
 }
