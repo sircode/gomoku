@@ -16,12 +16,20 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section {
 :focus {
     outline: 0;
 }
-body {
-    font-size: 62.5%;
-    line-height: 1;
-}
 ol, ul {
     list-style: none;
+}
+blockquote, q {
+    quotes: "" "";
+    :before, :after {
+        content: "";
+    }
+}
+ins {
+    text-decoration: none;
+}
+del {
+    text-decoration: line-through;
 }
 table {
     border-collapse: collapse;
@@ -34,7 +42,7 @@ caption, td, th {
     font-weight: normal;
 }
 th {
-    font-weight: bold;
+    font-weight: bolder;
 }
 p {
     text-indent: 0px;

@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/lib/lessc.inc.php';
+require_once __DIR__ . '/lib/Less.php';
+
+$less = new Less('less/style.less', 'css/style.css');
+$less->imgPath = '/images/';
+$less->compile(__DIR__ . '/less');
+
+?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" >
     <head>
         <meta charset="utf-8" />

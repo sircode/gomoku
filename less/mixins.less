@@ -1,0 +1,162 @@
+@gradient-x($left_color; $right_color = $left_color; $fallback_color_x = $left_color / 2 + $right_color / 2) {
+    background: $fallback_color_x;
+    background: -moz-linear-gradient(left,$left_color,$right_color);
+    background: -webkit-gradient(linear,left top,right top,color-stop(0,$left_color),color-stop(1,$right_color));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=$left_color,EndColorStr=$right_color,GradientType=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr={$left_color},EndColorStr={$right_color},GradientType=1)";
+    zoom: 1;
+}
+
+@gradient-y($top_color; $bottom_color = $top_color; $fallback_color_y = $top_color / 2 + $bottom_color / 2) {
+    background: $fallback_color_y;
+    background: -moz-linear-gradient(top,$top_color,$bottom_color);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0,$top_color),color-stop(1,$bottom_color));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=$top_color,EndColorStr=$bottom_color);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr={$top_color},EndColorStr={$bottom_color})";
+    zoom: 1;
+}
+
+@rotate($angle) {
+    -webkit-transform: rotate($angle);
+    -moz-transform: rotate($angle);
+    -ms-transform: rotate($angle);
+    -o-transform: rotate($angle);
+    transform: rotate($angle);
+}
+
+@border-radius-simple($radius_x; $radius_y = $radius_x) {
+    -webkit-border-radius: $radius_x $radius_y;
+    -khtml-border-radius: unquote("{$radius_x}/{$radius_y}");
+    -moz-border-radius: unquote("{$radius_x}/{$radius_y}");
+    border-radius: unquote("{$radius_x}/{$radius_y}");
+}
+
+@resize($direction = both) {
+    overflow: hidden;
+    resize: $direction;
+}
+
+@ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+@opacity($opacity = 0) {
+    -khtml-opacity: $opacity;
+    -moz-opacity: $opacity;
+    opacity: $opacity;
+    $ieopacity = $opacity * 100;
+    filter: alpha(opacity=$ieopacity);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity={$ieopacity})";
+}
+
+@background-color($color; $fallback) {
+    background-color: $fallback;
+    background-color: $color $fallback;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=$color,EndColorStr=$color);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr={$color},EndColorStr={$color})";
+    zoom: 1;
+}
+
+@background-clip($clip) {
+    -webkit-background-clip: $clip;
+    -khtml-background-clip: if($clip, border-box, border) if($clip, padding-box, padding);
+    -moz-background-clip: if($clip, border-box, border) if($clip, padding-box, padding);
+    background-clip: $clip;
+}
+
+@background-origin($origin) {
+    -webkit-background-origin: $origin;
+    -khtml-background-origin: if($origin, border-box, border) if($origin, padding-box, padding) if($origin, content-box, content);
+    -moz-background-origin: if($origin, border-box, border) if($origin, padding-box, padding) if($origin, content-box, content);
+    background-origin: $origin;
+}
+
+@background-size($size) {
+    -webkit-background-size: $size;
+    -khtml-background-size: $size;
+    -moz-background-size: $size;
+    -o-background-size: $size;
+    background-size: $size;
+}
+
+@border-image($image) {
+    -webkit-border-image: $image;
+    -khtml-border-image: $image;
+    -icab-border-image: $image;
+    -moz-border-image: $image;
+    -o-border-image: $image;
+    border-image: $image;
+}
+
+@border-radius($topleft; $topright = $topleft; $bottomright = $topleft; $bottomleft = $topright) {
+    border-top-left-radius: $topleft;
+    border-top-right-radius: $topright;
+    border-bottom-left-radius: $bottomleft;
+    border-bottom-right-radius: $bottomright;
+    -moz-border-radius-topleft: $topleft;
+    -moz-border-radius-topright: $topright;
+    -moz-border-radius-bottomleft: $bottomleft;
+    -moz-border-radius-bottomright: $bottomright;
+    -webkit-border-top-left-radius: $topleft;
+    -webkit-border-top-right-radius: $topright;
+    -webkit-border-bottom-left-radius: $bottomleft;
+    -webkit-border-bottom-right-radius: $bottomright;
+}
+
+@box-shadow($box_shadow) {
+    -webkit-box-shadow: $box_shadow;
+    -moz-box-shadow: $box_shadow;
+    box-shadow: $box_shadow;
+}
+
+//content-box, border-box
+//nefunguje pro buňky (ff), pro border-box nefunguje min-width/min-height
+@box-sizing($sizing) {
+    -webkit-box-sizing: $sizing;
+    -moz-box-sizing: $sizing;
+    box-sizing: $sizing;
+}
+
+@transition($transition) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+}
+
+@self-clear {
+    :after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+
+@size($size_width = auto; $size_height = $size_width) {
+    width: $size_width;
+    height: $size_height;
+}
+
+@image($image_path) {
+    //@size(imgWidth($image_path); imgHeight($image_path));
+    width: imgWidth($image_path);
+    height: imgHeight($image_path);
+    background: img($image_path) no-repeat;
+}
+
+@font($font_size; $line_height = 1.2) {
+    font-size: $font_size;
+    line-height: $line_height;
+}
+
+@bold {
+    font-weight: bold;
+}
+
+@block {
+    display: block;
+}

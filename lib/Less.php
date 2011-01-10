@@ -5,8 +5,6 @@
  */
 class Less extends lessc {
 
-    public $minimize = false;
-
     public $in, $out;
     public $imgPath = '';
 
@@ -16,9 +14,9 @@ class Less extends lessc {
         call_user_func_array('parent::__construct', func_get_args());
         $this->vPrefix = '$';
         $this->mPrefix = '@';
-        $this->minimize = false;
         $this->in = $in;
         $this->out = $out;
+        $this->indentChar = '    ';
     }
 
     function multiplyTags($tags = array(' '), $d = null) {
@@ -79,40 +77,6 @@ class Less extends lessc {
         return $c;
     }
 
-    function removeComments($text) {
-        return ltrim(parent::removeComments($text));
-    }
-
-    function compileProperty($name, $value, $level = 0) {
-        $this->property = $name;
-        $props = array();
-        foreach ($value as $v) {
-            $out = trim($this->compileValue($v));
-            if ($out == '') continue;
-            $props[] = str_repeat($this->outputSpace(2), $level) . $name . ':' . $this->outputSpace() . $out . ';';
-        }
-        return $props;
-    }
-
-  function compileBlock($rtags, $env) {
-    if (empty($rtags)) return '';
-    $list = array();
-    foreach ($env as $name => $value) {
-      if (isset($value[0]) && $name{0} != $this->vPrefix && $name != '__args') {
-        $list = array_merge($list, $this->compileProperty($name, $value, 1));
-      }
-    }
-    $list = array_unique($list);
-    if (count($list) == 0) {
-      return '';
-    } elseif (count($list) == 1) {
-      $list = $this->outputSpace() . trim(end($list)) . $this->outputSpace();
-    } else {
-      $list = $this->outputLine() . implode($this->outputLine(), $list) . $this->outputLine();
-    }
-    return implode(',' . $this->outputSpace(), $rtags) . $this->outputSpace() . '{' . $list . '}' . $this->outputLine();
-  }
-
   function compileValue($value) {
     if ($value[0] == 'function' && $color = $this->funcToColor($value)) {
       $value = $color;
@@ -141,14 +105,6 @@ class Less extends lessc {
 
   function isFilter() {
     return $this->property == 'filter' || $this->property == '-ms-filter';
-  }
-
-  function outputLine() {
-    return $this->minimize ? '' : "\n";
-  }
-
-  function outputSpace($count = 1) {
-    return $this->minimize ? '' : str_repeat(' ', $count);
   }
 
   function lib_if($arg) {
@@ -181,9 +137,9 @@ class Less extends lessc {
 
     function compile($check = true) {
         if (is_file($this->out) && is_dir($check)) {
-            $dir = new \M33\DirectoryIterator($check);
+            $dir = new DirectoryIterator($check);
             foreach ($dir as $file) {
-                if ($file->getExtension() == 'less' || $file->getExtension() == 'css') {
+                if (pathinfo($file->getBasename(), PATHINFO_EXTENSION) == 'less' || pathinfo($file->getBasename(), PATHINFO_EXTENSION) == 'css') {
                     if ($file->getMTime() > filemtime($this->out)) {
                         $check = false;
                     }
@@ -203,9 +159,5 @@ class Less extends lessc {
         }
         return $less->compile();
     }
-  
-    //TODO
-    function at_import() {}
-    function at_include() {}
 
 }

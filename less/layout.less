@@ -1,0 +1,41 @@
+#new {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 200px;
+    height: 300px;
+    margin-top: -150px;
+    margin-left: -100px;
+    background: #DCDCDC;
+    @border-radius(10px);
+    @box-shadow(0px 0px 5px 0px #000-50);
+
+    h1 {
+        @font(1.8em);
+        @bold;
+        padding: 10px;
+        color: #555;
+    }
+
+    .option {
+        @self-clear;
+        padding: 5px 10px;
+
+        h2 {
+            @font(1.5em);
+            @bold;
+            color: #555;
+        }
+
+        input {
+            float: left;
+            clear: left;
+        }
+
+        label {
+            @font(1.2em; 1.7em);
+            float: left;
+            padding-left: 5px;
+        }
+    }
+}
