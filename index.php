@@ -11,9 +11,10 @@
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="bookmark icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
-        <script src="/js/jquery-1.4.4.js"></script>
-        <script src="/js/class.js"></script>
-        <script src="/js/script.js"></script>
+        <script src="/js/head.js"></script>
+        <script>
+            head.js('/js/jquery-1.4.4.js', '/js/class.js', '/js/script.js');
+        </script>
     </head>
     <body>
         <div id="new">
