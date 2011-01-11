@@ -29,19 +29,19 @@ $less->compile(__DIR__ . '/less');
             <h1>Nová hra</h1>
             <div class="option">
                 <h2>Typ hry</h2>
-                <input type="radio" id="form-type" value="0" /><label>hráč vs. počítač</label>
-                <input type="radio" id="form-type" value="1" /><label>počítač vs. hráč</label>
-                <input type="radio" id="form-type" value="2" /><label>2 hráči</label>
+                <input type="radio" name="type" value="0" /><label>hráč vs. počítač</label>
+                <input type="radio" name="type" value="1" /><label>počítač vs. hráč</label>
+                <input type="radio" name="type" value="2" /><label>2 hráči</label>
             </div>
             <div class="option">
                 <h2>Začínající hráč</h2>
-                <input type="radio" id="form-type" value="0" /><label>X</label>
-                <input type="radio" id="form-type" value="1" /><label>O</label>
+                <input type="radio" name="begin" value="0" /><label>X</label>
+                <input type="radio" name="begin" value="1" /><label>O</label>
             </div>
             <div class="option">
                 <h2>Hardcore</h2>
-                <input type="radio" id="form-type" value="0" /><label>Ne</label>
-                <input type="radio" id="form-type" value="1" /><label>Ano</label>
+                <input type="radio" name="hardcore" value="0" /><label>Ne</label>
+                <input type="radio" name="hardcore" value="1" /><label>Ano</label>
             </div>
         </div>
         <div id="game">
