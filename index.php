@@ -25,6 +25,7 @@ $less->compile(__DIR__ . '/less');
         </script>
     </head>
     <body>
+
         <div id="new">
             <h1>Nová hra</h1>
             <div class="option">
@@ -35,18 +36,34 @@ $less->compile(__DIR__ . '/less');
             </div>
             <div class="option">
                 <h2>Začínající hráč</h2>
-                <input type="radio" name="begin" id="form-begin-0" value="0" checked="checked" /><label for="form-begin-0">X</label>
-                <input type="radio" name="begin" id="form-begin-1" value="1" /><label for="form-begin-1">O</label>
+                <input type="radio" name="image" id="form-image-0" value="0" checked="checked" /><label for="form-image-0">X</label>
+                <input type="radio" name="image" id="form-image-1" value="1" /><label for="form-image-1">O</label>
             </div>
-            <div class="option">
+            <!--<div class="option">
                 <h2>Hardcore</h2>
                 <input type="radio" name="hardcore" id="form-hardcore-0" value="0" checked="checked" /><label for="form-hardcore-0">Ne</label>
                 <input type="radio" name="hardcore" id="form-hardcore-1" value="1" /><label for="form-hardcore-1">Ano</label>
-            </div>
-            <input type="submit" value="Začít hru">
+            </div>-->
+            <input type="submit" id="play" value="Začít hru">
         </div>
-        <div id="game">
 
+        <table id="game">
+            <tbody>
+                <?php
+                    for ($i = 0; $i < 15; $i++) {
+                        echo "<tr>\n";
+                        for ($j = 0; $j < 15; $j++) {
+                            echo "<td></td>\n";
+                        }
+                        echo "</tr>\n";
+                    }
+                ?>
+            </tbody>
+        </table>
+
+        <div id="link">
+            <a href="">Začít novou hru</a>
         </div>
+
     </body>
 </html>
