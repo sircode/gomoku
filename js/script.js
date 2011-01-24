@@ -4,9 +4,7 @@
 var Game = class({
 
     /**
-     * @param Plan
-     * @param Player
-     * @param Player
+     * @param bool
      * @return void
      */
     constructor: function (hardcore) {
@@ -74,7 +72,7 @@ var Game = class({
         while (x - i >= 0 && this.getCoords(x - i, y) == player) i++;
         while (x + j < 15 && this.getCoords(x + j, y) == player) j++;
         if (i + j == 6) {
-            this.victory(player);
+            this.victory(x, y, 1);
             return;
         }
 
@@ -83,7 +81,7 @@ var Game = class({
         while (y - i >= 0 && this.getCoords(x, y - i) == player) i++;
         while (y + j < 15 && this.getCoords(x, y + j) == player) j++;
         if (i + j == 6) {
-            this.victory(player);
+            this.victory(x, y, 2);
             return;
         }
 
@@ -92,7 +90,7 @@ var Game = class({
         while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) i++;
         while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) j++;
         if (i + j == 6) {
-            this.victory(player);
+            this.victory(x, y, 3);
             return;
         }
 
@@ -101,7 +99,7 @@ var Game = class({
         while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) i++;
         while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) j++;
         if (i + j == 6) {
-            this.victory(player);
+            this.victory(x, y, 4);
             return;
         }
 
@@ -120,18 +118,50 @@ var Game = class({
     },
 
     /**
-     * @param Player
+     * @param int
+     * @param int
+     * @param int
      * @return void
      */
-    victory: function() {
-
+    victory: function(x, y, direction) {
+        var i = 1,
+            j = 1;
+            player = this.getCoords(x, y);
+        switch (direction) {
+            case 1: // -
+                while (x - i >= 0 && this.getCoords(x - i, y) == player) this.getField(x - i++, y).addClass('victorious');
+                while (x + j < 15 && this.getCoords(x + j, y) == player) this.getField(x + j++, y).addClass('victorious');
+                break;
+            case 2: // |
+                while (y - i >= 0 && this.getCoords(x, y - i) == player) this.getField(x, y - i++).addClass('victorious');
+                while (y + j < 15 && this.getCoords(x, y + j) == player) this.getField(x, y + j++).addClass('victorious');
+                break;
+            case 3: // \
+                while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) this.getField(x - i, y - i++).addClass('victorious');
+                while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) this.getField(x + j, y + j++).addClass('victorious');
+                break;
+            case 4: // /
+                while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) this.getField(x - i, y + i++).addClass('victorious');
+                while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) this.getField(x + j, y - j++).addClass('victorious');
+                break;
+        }
+        this.getField(x, y).addClass('victorious');
+        this.end();
     },
 
     /**
      * @return void
      */
     draw: function() {
+        this.end();
+    },
 
+    /**
+     * @return void
+     */
+    end: function() {
+        this.actual = null;
+        $('#reset').addClass('highlight');
     },
 
     /**
@@ -234,8 +264,10 @@ $('#play').click(function () {
     game.player2 = player2;
     game.actual = player1;
 
+    $('#reset').removeClass('highlight');
     $('#new').css('display', 'none');
     $('#game').css('display', 'block');
+    $('#game .victorious').removeClass('victorious');
 
     game.run();
 

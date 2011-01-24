@@ -34,10 +34,10 @@ $less->compile(__DIR__ . '/less');
                 <input type="radio" name="type" id="form-type-1" value="1" /><label for="form-type-1">počítač vs. hráč</label>
                 <input type="radio" name="type" id="form-type-2" value="2" /><label for="form-type-2">2 hráči</label>
             </div>
-            <div class="option">
+            <div class="option begin">
                 <h2>Začínající hráč</h2>
-                <input type="radio" name="image" id="form-image-0" value="0" checked="checked" /><label for="form-image-0">X</label>
-                <input type="radio" name="image" id="form-image-1" value="1" /><label for="form-image-1">O</label>
+                <input type="radio" name="image" id="form-image-0" value="0" checked="checked" /><label for="form-image-0"><img src="/img/cross.png" alt="X" title="křížek" /></label>
+                <input type="radio" name="image" id="form-image-1" value="1" /><label for="form-image-1"><img src="/img/circle.png" alt="O" title="kolečko" /></label>
             </div>
             <!--<div class="option">
                 <h2>Hardcore</h2>
@@ -47,22 +47,22 @@ $less->compile(__DIR__ . '/less');
             <input type="submit" id="play" value="Začít hru">
         </div>
 
-        <table id="game">
-            <tbody>
-                <?php
-                    for ($i = 0; $i < 15; $i++) {
-                        echo "<tr>\n";
-                        for ($j = 0; $j < 15; $j++) {
-                            echo "<td></td>\n";
+        <div id="game">
+            <table>
+                <tbody>
+                    <?php
+                        for ($i = 0; $i < 15; $i++) {
+                            echo "<tr>\n";
+                            for ($j = 0; $j < 15; $j++) {
+                                echo "<td></td>\n";
+                            }
+                            echo "</tr>\n";
                         }
-                        echo "</tr>\n";
-                    }
-                ?>
-            </tbody>
-        </table>
+                    ?>
+                </tbody>
+            </table>
 
-        <div id="link">
-            <a href="">Začít novou hru</a>
+            <a id="reset" href="/">Začít novou hru</a>
         </div>
 
     </body>

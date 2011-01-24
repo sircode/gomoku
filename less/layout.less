@@ -25,6 +25,7 @@
             @font(1.5em);
             @bold;
             color: #555;
+            padding-bottom: 4px;
         }
 
         input {
@@ -33,9 +34,23 @@
         }
 
         label {
-            @font(1.2em; 1.7em);
+            @font(1.3em; 1.8em);
             float: left;
             padding-left: 5px;
+        }
+
+        &.begin {
+
+            label {
+                @font(2.5em);
+                margin-right: 10px;
+            }
+
+            input {
+                clear: none;
+                position: relative;
+                top: 5px;
+            }
         }
     }
 
@@ -61,9 +76,31 @@
     }
 }
 
+#reset {
+    @font(1.5em);
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 150px;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    
+    &.highlight {
+        background: #DCDCDC;
+        @border-radius(13px);
+        @box-shadow(0px 0px 5px 0px #000-50);
+        padding: 3px;
+    }
+}
+
 .cross {
-    background: red;
+    background-image: url('/img/cross.png');
 }
 .circle {
-    background: green;
+    background-image: url('/img/circle.png');
+}
+.victorious {
+    background-color: #FDEC9E;
 }
