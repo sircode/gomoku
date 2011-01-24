@@ -4,19 +4,9 @@
 var Game = class({
 
     /**
-     * @param bool
      * @return void
      */
-    constructor: function (hardcore) {
-        this.hardcore = hardcore;
-    },
-
-    /**
-     * @return bool
-     */
-    isHardcore: function () {
-        return this.hardcore;
-    },
+    constructor: function () {},
 
     /**
      * @param int
@@ -244,9 +234,8 @@ $('#play').click(function () {
 
     var type = $('input:radio[name=type]:checked').val();
     var image = $('input:radio[name=image]:checked').val() == 1;
-    var hardcore = $('input:radio[name=hardcore]:checked').val() == 1;
 
-    var game = new Game(hardcore);
+    var game = new Game();
     var player1, player2;
     if (type == 0) {
         player1 = new Human(game, image);

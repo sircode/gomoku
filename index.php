@@ -39,11 +39,6 @@ $less->compile(__DIR__ . '/less');
                 <input type="radio" name="image" id="form-image-0" value="0" checked="checked" /><label for="form-image-0"><img src="/img/cross.png" alt="X" title="křížek" /></label>
                 <input type="radio" name="image" id="form-image-1" value="1" /><label for="form-image-1"><img src="/img/circle.png" alt="O" title="kolečko" /></label>
             </div>
-            <!--<div class="option">
-                <h2>Hardcore</h2>
-                <input type="radio" name="hardcore" id="form-hardcore-0" value="0" checked="checked" /><label for="form-hardcore-0">Ne</label>
-                <input type="radio" name="hardcore" id="form-hardcore-1" value="1" /><label for="form-hardcore-1">Ano</label>
-            </div>-->
             <input type="submit" id="play" value="Začít hru">
         </div>
 
