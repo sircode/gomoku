@@ -257,7 +257,7 @@ var Human = class({
 $('#play').click(function () {
 
     var type = $('input:radio[name=type]:checked').val();
-    var image = $('input:radio[name=image]:checked').val() == 1;
+    var image = $('input:radio[name=image]:checked').val() == 0;
 
     var game = new Game();
     var player1, player2;
