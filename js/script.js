@@ -19,6 +19,7 @@ var Game = class({
     /**
      * @param int
      * @param int
+     * @return jQuery
      */
     getField: function (x, y) {
         return $('#game tr:eq(' + y + ') > td:eq(' + x +')');
@@ -27,6 +28,7 @@ var Game = class({
     /**
      * @param int
      * @param int
+     * @return bool
      */
     isValidCoords: function (x, y) {
         return x >= 0 && x < 15 && y >= 0 && y < 15;
