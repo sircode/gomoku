@@ -1,7 +1,7 @@
 /**
  * @class
  */
-var Game = class({
+var Game = $class({
 
     /**
      * @return void
@@ -184,7 +184,7 @@ var Game = class({
 /**
  * @class
  */
-var Player = class({
+var Player = $class({
 
     /**
      * @return void
@@ -204,7 +204,7 @@ var Player = class({
 /**
  * @class
  */
-var Computer = class({
+var Computer = $class({
 
     Extends: Player,
 
@@ -338,7 +338,7 @@ var Computer = class({
 /**
  * @class
  */
-var Human = class({
+var Human = $class({
 
     Extends: Player,
 
@@ -363,7 +363,7 @@ $('#play').click(function () {
 
     var type = $('input:radio[name=type]:checked').val();
     var image = $('input:radio[name=image]:checked').val() == 0;
-
+    
     var game = new Game();
     var player1, player2;
     if (type == 0) {

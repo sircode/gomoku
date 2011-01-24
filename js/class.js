@@ -1,4 +1,4 @@
-var class = function(definition) {
+var $class = function(definition) {
     var constructor = definition.constructor;
     var parent = definition.Extends;
     if (parent) {
