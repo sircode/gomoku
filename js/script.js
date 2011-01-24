@@ -286,7 +286,7 @@ var Computer = class({
             if (!valid) continue;
             if (opponent > 0 && self == 0)
                 score += this.scoreDefense(opponent);
-            else if (self > 0)
+            else if (self > 0 && opponent == 0)
                 score += this.scoreAttack(self);
             else
                 score++;
