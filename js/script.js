@@ -118,7 +118,7 @@ var Game = class({
             this.draw();
             return;
         }
-        
+
         this.run();
     },
 
