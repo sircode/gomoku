@@ -6,7 +6,15 @@ var Game = class({
     /**
      * @return void
      */
-    constructor: function () {},
+    constructor: function () {
+        this.coords = [];
+        for (var i = 0; i < 15; i++) {
+            this.coords[i] = [];
+            for (var j = 0; j < 15; j ++) {
+                this.coords[i][j] = null;
+            }
+        }
+    },
 
     /**
      * @param int
@@ -19,17 +27,18 @@ var Game = class({
     /**
      * @param int
      * @param int
+     */
+    isValidCoords: function (x, y) {
+        return x >= 0 && x < 15 && y >= 0 && y < 15;
+    },
+
+    /**
+     * @param int
+     * @param int
      * @return Player|null
      */
     getCoords: function (x, y) {
-        var field = this.getField(x, y);
-        if ((field.hasClass('cross') && this.player1.image) || (field.hasClass('circle') && !this.player1.image)) {
-            return this.player1;
-        } else if ((field.hasClass('cross') && this.player2.image) || (field.hasClass('circle') && !this.player2.image)) {
-            return this.player2;
-        } else {
-            return null;
-        }
+        return this.coords[x][y];
     },
 
     /**
@@ -38,6 +47,7 @@ var Game = class({
      * @param Player
      */
     setCoords: function (x, y, player) {
+        this.coords[x][y] = player;
         $('#game td.last').removeClass('last');
         var field = this.getField(x, y);
         if (player.image) {
@@ -52,7 +62,7 @@ var Game = class({
      * @return void
      */
     tryMove: function (player, x, y) {
-        if (this.actual != player || x < 0 || x >= 15 || y < 0 || y >= 15 || this.getCoords(x, y) != null) return;
+        if (this.actual != player || !this.isValidCoords(x, y) || this.getCoords(x, y) != null) return;
         this.setCoords(x, y, player);
         if (player == this.player1) this.actual = this.player2;
         else this.actual = this.player1;
@@ -62,32 +72,32 @@ var Game = class({
 
         i = 1;
         j = 1;
-        while (x - i >= 0 && this.getCoords(x - i, y) == player) i++;
-        while (x + j < 15 && this.getCoords(x + j, y) == player) j++;
+        while (this.isValidCoords(x - i, y) && this.getCoords(x - i, y) == player) i++;
+        while (this.isValidCoords(x + j, y) && this.getCoords(x + j, y) == player) j++;
         if (i + j == 6) {
             directions.push(1);
         }
 
         i = 1;
         j = 1;
-        while (y - i >= 0 && this.getCoords(x, y - i) == player) i++;
-        while (y + j < 15 && this.getCoords(x, y + j) == player) j++;
+        while (this.isValidCoords(x, y - i) && this.getCoords(x, y - i) == player) i++;
+        while (this.isValidCoords(x, y + j) && this.getCoords(x, y + j) == player) j++;
         if (i + j == 6) {
             directions.push(2);
         }
 
         i = 1;
         j = 1;
-        while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) i++;
-        while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) j++;
+        while (this.isValidCoords(x - i, y - i) && this.getCoords(x - i, y - i) == player) i++;
+        while (this.isValidCoords(x + j, y + j) && this.getCoords(x + j, y + j) == player) j++;
         if (i + j == 6) {
             directions.push(3);
         }
 
         i = 1;
         j = 1;
-        while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) i++;
-        while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) j++;
+        while (this.isValidCoords(x - i, y + i) && this.getCoords(x - i, y + i) == player) i++;
+        while (this.isValidCoords(x + j, y - j) && this.getCoords(x + j, y - j) == player) j++;
         if (i + j == 6) {
             directions.push(4);
         }
@@ -124,20 +134,20 @@ var Game = class({
             j = 1;
             switch (directions[key]) {
                 case 1: // -
-                    while (x - i >= 0 && this.getCoords(x - i, y) == player) this.getField(x - i++, y).addClass('victorious');
-                    while (x + j < 15 && this.getCoords(x + j, y) == player) this.getField(x + j++, y).addClass('victorious');
+                    while (this.isValidCoords(x - i, y) && this.getCoords(x - i, y) == player) this.getField(x - i++, y).addClass('victorious');
+                    while (this.isValidCoords(x + j, y) && this.getCoords(x + j, y) == player) this.getField(x + j++, y).addClass('victorious');
                     break;
                 case 2: // |
-                    while (y - i >= 0 && this.getCoords(x, y - i) == player) this.getField(x, y - i++).addClass('victorious');
-                    while (y + j < 15 && this.getCoords(x, y + j) == player) this.getField(x, y + j++).addClass('victorious');
+                    while (this.isValidCoords(x, y - i) && this.getCoords(x, y - i) == player) this.getField(x, y - i++).addClass('victorious');
+                    while (this.isValidCoords(x, y + j) && this.getCoords(x, y + j) == player) this.getField(x, y + j++).addClass('victorious');
                     break;
                 case 3: // \
-                    while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) this.getField(x - i, y - i++).addClass('victorious');
-                    while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) this.getField(x + j, y + j++).addClass('victorious');
+                    while (this.isValidCoords(x - i, y - i) && this.getCoords(x - i, y - i) == player) this.getField(x - i, y - i++).addClass('victorious');
+                    while (this.isValidCoords(x + j, y + j) && this.getCoords(x + j, y + j) == player) this.getField(x + j, y + j++).addClass('victorious');
                     break;
                 case 4: // /
-                    while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) this.getField(x - i, y + i++).addClass('victorious');
-                    while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) this.getField(x + j, y - j++).addClass('victorious');
+                    while (this.isValidCoords(x - i, y + i) && this.getCoords(x - i, y + i) == player) this.getField(x - i, y + i++).addClass('victorious');
+                    while (this.isValidCoords(x + j, y - j) && this.getCoords(x + j, y - j) == player) this.getField(x + j, y - j++).addClass('victorious');
                     break;
             }
         }
@@ -205,11 +215,96 @@ var Computer = class({
 
     /**
      * @param int
+     * @return int
+     */
+    scoreDefense: function (count) {
+        switch (count) {
+            case 1: return 20;
+            case 2: return 200;
+            case 3: return 1000;
+            case 4: return 10000;
+            default: return 0;
+        }
+    },
+
+    /**
      * @param int
      * @return int
      */
-    score: function (x, y) {
-        return Math.floor(Math.random()*1000);
+    scoreAttack: function (count) {
+        switch (count) {
+            case 1: return 10;
+            case 2: return 100;
+            case 3: return 2000;
+            case 4: return 50000;
+            default: return 0;
+        }
+    },
+
+    /**
+     * @param int
+     * @param int
+     * @param int
+     * @return int
+     */
+    scoreDirection: function (x, y, direction) {
+        var dx, dy;
+        switch (direction) {
+            case 1: // -
+                dx = 1;
+                dy = 0;
+                break;
+            case 2: // |
+                dx = 1;
+                dy = 1;
+                break;
+            case 3: // \
+                dx = -1;
+                dy = 1;
+                break;
+            case 4: // /
+                dx = 0;
+                dy = 1;
+                break;
+        }
+        var score = 0,
+            self, opponent, valid, tx, ty;
+        for (var i = 1; i <= 5; i++) {
+            self = 0;
+            opponent = 0;
+            valid = true;
+            for (var j = 1; j <= 5; j++) {
+                tx = x + (i + j - 6) * dx;
+                ty = y + (i + j - 6) * dy;
+                if (!this.game.isValidCoords(tx, ty))
+                    valid = false;
+                else if (this.game.getCoords(tx, ty) == this)
+                    self++;
+                else if (this.game.getCoords(tx, ty) != null)
+                    opponent++;
+            }
+            if (!valid) continue;
+            if (opponent > 0 && self == 0)
+                score += this.scoreDefense(opponent);
+            else if (self > 0)
+                score += this.scoreAttack(self);
+            else
+                score++;
+        }
+        return score;
+    },
+
+    /**
+     * @param int
+     * @param int
+     * @return int
+     */
+    scoreField: function (x, y) {
+        var score = 0;
+        for (var i = 1; i <= 4; i++) {
+            score += this.scoreDirection(x, y, i);
+        }
+        return score;
     },
 
     /**
@@ -223,7 +318,7 @@ var Computer = class({
         for (var i = 0; i < 15; i++) {
             for (var j = 0; j < 15; j++) {
                 if (this.game.getCoords(i, j) != null) continue;
-                now = this.score(i, j);
+                now = this.scoreField(i, j);
                 if (top < now) {
                     top = now;
                     x = i;
