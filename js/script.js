@@ -311,9 +311,7 @@ var Computer = class({
      * @return void
      */
     move: function () {
-        var now,
-            x = 0,
-            y = 0,
+        var now, fields = [],
             top = 0;
         for (var i = 0; i < 15; i++) {
             for (var j = 0; j < 15; j++) {
@@ -321,12 +319,16 @@ var Computer = class({
                 now = this.scoreField(i, j);
                 if (top < now) {
                     top = now;
-                    x = i;
-                    y = j;
+                    fields = [];
+                    fields.push([i, j]);
+                }
+                if (top == now) {
+                    fields.push([i, j]);
                 }
             }
         }
-        this.game.tryMove(this, x, y);
+        now = fields[Math.floor(Math.random() * fields.length)];
+        this.game.tryMove(this, now[0], now[1]);
     },
 
 });
