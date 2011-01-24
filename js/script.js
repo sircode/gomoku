@@ -57,15 +57,15 @@ var Game = class({
         if (player == this.player1) this.actual = this.player2;
         else this.actual = this.player1;
 
-        var i, j;
+        var i, j,
+            directions = [];
 
         i = 1;
         j = 1;
         while (x - i >= 0 && this.getCoords(x - i, y) == player) i++;
         while (x + j < 15 && this.getCoords(x + j, y) == player) j++;
         if (i + j == 6) {
-            this.victory(x, y, 1);
-            return;
+            directions.push(1);
         }
 
         i = 1;
@@ -73,8 +73,7 @@ var Game = class({
         while (y - i >= 0 && this.getCoords(x, y - i) == player) i++;
         while (y + j < 15 && this.getCoords(x, y + j) == player) j++;
         if (i + j == 6) {
-            this.victory(x, y, 2);
-            return;
+            directions.push(2);
         }
 
         i = 1;
@@ -82,8 +81,7 @@ var Game = class({
         while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) i++;
         while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) j++;
         if (i + j == 6) {
-            this.victory(x, y, 3);
-            return;
+            directions.push(3);
         }
 
         i = 1;
@@ -91,8 +89,11 @@ var Game = class({
         while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) i++;
         while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) j++;
         if (i + j == 6) {
-            this.victory(x, y, 4);
-            return;
+            directions.push(4);
+        }
+
+        if (directions.length) {
+            this.victory(x, y, directions);
         }
 
         var full = true;
@@ -112,30 +113,33 @@ var Game = class({
     /**
      * @param int
      * @param int
-     * @param int
+     * @param array
      * @return void
      */
-    victory: function(x, y, direction) {
-        var i = 1,
-            j = 1;
+    victory: function(x, y, directions) {
+        var i, j,
             player = this.getCoords(x, y);
-        switch (direction) {
-            case 1: // -
-                while (x - i >= 0 && this.getCoords(x - i, y) == player) this.getField(x - i++, y).addClass('victorious');
-                while (x + j < 15 && this.getCoords(x + j, y) == player) this.getField(x + j++, y).addClass('victorious');
-                break;
-            case 2: // |
-                while (y - i >= 0 && this.getCoords(x, y - i) == player) this.getField(x, y - i++).addClass('victorious');
-                while (y + j < 15 && this.getCoords(x, y + j) == player) this.getField(x, y + j++).addClass('victorious');
-                break;
-            case 3: // \
-                while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) this.getField(x - i, y - i++).addClass('victorious');
-                while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) this.getField(x + j, y + j++).addClass('victorious');
-                break;
-            case 4: // /
-                while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) this.getField(x - i, y + i++).addClass('victorious');
-                while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) this.getField(x + j, y - j++).addClass('victorious');
-                break;
+        for (key in directions) {
+            i = 1;
+            j = 1;
+            switch (directions[key]) {
+                case 1: // -
+                    while (x - i >= 0 && this.getCoords(x - i, y) == player) this.getField(x - i++, y).addClass('victorious');
+                    while (x + j < 15 && this.getCoords(x + j, y) == player) this.getField(x + j++, y).addClass('victorious');
+                    break;
+                case 2: // |
+                    while (y - i >= 0 && this.getCoords(x, y - i) == player) this.getField(x, y - i++).addClass('victorious');
+                    while (y + j < 15 && this.getCoords(x, y + j) == player) this.getField(x, y + j++).addClass('victorious');
+                    break;
+                case 3: // \
+                    while (x - i >= 0 && y - i >= 0 && this.getCoords(x - i, y - i) == player) this.getField(x - i, y - i++).addClass('victorious');
+                    while (x + j < 15 && y + j < 15 && this.getCoords(x + j, y + j) == player) this.getField(x + j, y + j++).addClass('victorious');
+                    break;
+                case 4: // /
+                    while (x - i >= 0 && y + i < 15 && this.getCoords(x - i, y + i) == player) this.getField(x - i, y + i++).addClass('victorious');
+                    while (x + j < 15 && y - j >= 0 && this.getCoords(x + j, y - j) == player) this.getField(x + j, y - j++).addClass('victorious');
+                    break;
+            }
         }
         this.getField(x, y).addClass('victorious');
         this.end();
