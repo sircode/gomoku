@@ -198,10 +198,34 @@ var Computer = class({
     },
 
     /**
+     * @param int
+     * @param int
+     * @return int
+     */
+    score: function (x, y) {
+        return Math.floor(Math.random()*1000);
+    },
+
+    /**
      * @return void
      */
     move: function () {
-
+        var now,
+            x = 0,
+            y = 0,
+            top = 0;
+        for (var i = 0; i < 15; i++) {
+            for (var j = 0; j < 15; j++) {
+                if (this.game.getCoords(i, j) != null) continue;
+                now = this.score(i, j);
+                if (top < now) {
+                    top = now;
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+        this.game.tryMove(this, x, y);
     },
 
 });
@@ -220,8 +244,8 @@ var Human = class({
         Player.apply(this, arguments);
         (function (player) {
             $('#game td').click(function () {
-                x = $(this).prevAll().size();
-                y = $(this).parent().prevAll().size();
+                var x = $(this).prevAll().size(),
+                    y = $(this).parent().prevAll().size();
                 player.game.tryMove(player, x, y);
             });
         })(this);
