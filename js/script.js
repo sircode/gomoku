@@ -38,12 +38,14 @@ var Game = class({
      * @param Player
      */
     setCoords: function (x, y, player) {
+        $('#game td.last').removeClass('last');
         var field = this.getField(x, y);
         if (player.image) {
             field.addClass('cross');
         } else {
             field.addClass('circle');
         }
+        field.addClass('last');
     },
 
     /**
