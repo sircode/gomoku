@@ -358,35 +358,38 @@ var Human = $class({
 
 });
 
+$(function () {
 
-$('#play').click(function () {
+    $('#play').click(function () {
 
-    var type = $('input:radio[name=type]:checked').val();
-    var image = $('input:radio[name=image]:checked').val() == 0;
-    
-    var game = new Game();
-    var player1, player2;
-    if (type == 0) {
-        player1 = new Human(game, image);
-        player2 = new Computer(game, !image);
-    } else if (type == 1) {
-        player1 = new Computer(game, image);
-        player2 = new Human(game, !image);
-    } else if (type == 2) {
-        player1 = new Human(game, image);
-        player2 = new Human(game, !image);
-    } else {
-        throw 'Unknown game type.';
-    }
-    game.player1 = player1;
-    game.player2 = player2;
-    game.actual = player1;
+        var type = $('input:radio[name=type]:checked').val();
+        var image = $('input:radio[name=image]:checked').val() == 0;
 
-    $('#reset').removeClass('highlight');
-    $('#new').css('display', 'none');
-    $('#game').css('display', 'block');
-    $('#game .victorious').removeClass('victorious');
+        var game = new Game();
+        var player1, player2;
+        if (type == 0) {
+            player1 = new Human(game, image);
+            player2 = new Computer(game, !image);
+        } else if (type == 1) {
+            player1 = new Computer(game, image);
+            player2 = new Human(game, !image);
+        } else if (type == 2) {
+            player1 = new Human(game, image);
+            player2 = new Human(game, !image);
+        } else {
+            throw 'Unknown game type.';
+        }
+        game.player1 = player1;
+        game.player2 = player2;
+        game.actual = player1;
 
-    game.run();
+        $('#reset').removeClass('highlight');
+        $('#new').css('display', 'none');
+        $('#game').css('display', 'block');
+        $('#game .victorious').removeClass('victorious');
+
+        game.run();
+
+    });
 
 });
