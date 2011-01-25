@@ -290,7 +290,7 @@ var Computer = $class({
                 score += this.scoreDefense(opponent);
             else if (self > 0 && opponent == 0)
                 score += this.scoreAttack(self);
-            else
+            else if (self == 0 && opponent == 0)
                 score++;
         }
         return score;
@@ -313,7 +313,8 @@ var Computer = $class({
      * @return void
      */
     move: function () {
-        var now, fields = [],
+        var now,
+            fields = [],
             top = 0;
         for (var i = 0; i < 15; i++) {
             for (var j = 0; j < 15; j++) {
