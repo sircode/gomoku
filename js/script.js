@@ -176,7 +176,7 @@ var Game = $class({
      * @return void
      */
     run: function () {
-        this.actual.move();
+        if (this.actual) this.actual.move();
     },
 
 });
