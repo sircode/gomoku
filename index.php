@@ -46,9 +46,9 @@ $less->compile(__DIR__ . '/less');
             <table>
                 <tbody>
                     <?php
-                        for ($i = 0; $i < 15; $i++) {
+                        for ($i = 0; $i < 19; $i++) {
                             echo "<tr>\n";
-                            for ($j = 0; $j < 15; $j++) {
+                            for ($j = 0; $j < 19; $j++) {
                                 echo "<td></td>\n";
                             }
                             echo "</tr>\n";

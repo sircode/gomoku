@@ -1,4 +1,9 @@
 /**
+ * @const
+ */
+var SIZE = 19;
+
+/**
  * @class
  */
 var Game = $class({
@@ -8,9 +13,9 @@ var Game = $class({
      */
     constructor: function () {
         this.coords = [];
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < SIZE; i++) {
             this.coords[i] = [];
-            for (var j = 0; j < 15; j ++) {
+            for (var j = 0; j < SIZE; j ++) {
                 this.coords[i][j] = null;
             }
         }
@@ -31,7 +36,7 @@ var Game = $class({
      * @return bool
      */
     isValidCoords: function (x, y) {
-        return x >= 0 && x < 15 && y >= 0 && y < 15;
+        return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
     },
 
     /**
@@ -109,8 +114,8 @@ var Game = $class({
         }
 
         var full = true;
-        for (i = 0; i < 15; i++) {
-            for (j = 0; j < 15; j ++) {
+        for (i = 0; i < SIZE; i++) {
+            for (j = 0; j < SIZE; j ++) {
                 if (this.getCoords(i, j) == null) full = false;
             }
         }
@@ -316,8 +321,8 @@ var Computer = $class({
         var now,
             fields = [],
             top = 0;
-        for (var i = 0; i < 15; i++) {
-            for (var j = 0; j < 15; j++) {
+        for (var i = 0; i < SIZE; i++) {
+            for (var j = 0; j < SIZE; j++) {
                 if (this.game.getCoords(i, j) != null) continue;
                 now = this.scoreField(i, j);
                 if (top < now) {
