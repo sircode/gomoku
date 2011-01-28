@@ -288,8 +288,8 @@ var Computer = $class({
                 }
             }
         }
-        now = fields[Math.floor(Math.random() * fields.length)];
-        this.game.tryMove(this, now[0], now[1]);
+        var move = fields[Math.floor(Math.random() * fields.length)];
+        this.game.tryMove(this, move[0], move[1]);
     },
 
     /**
