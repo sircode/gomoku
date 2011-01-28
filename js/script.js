@@ -3,12 +3,15 @@
  */
 var SIZE = 19;
 
+
+
 /**
  * @class
  */
 var Game = $class({
 
     /**
+     * @access public
      * @return void
      */
     constructor: function () {
@@ -22,15 +25,15 @@ var Game = $class({
     },
 
     /**
-     * @param int
-     * @param int
-     * @return jQuery
+     * @access public
+     * @return void
      */
-    getField: function (x, y) {
-        return $('#game tr:eq(' + y + ') > td:eq(' + x +')');
+    run: function () {
+        if (this.actual) this.actual.move();
     },
 
     /**
+     * @access public
      * @param int
      * @param int
      * @return bool
@@ -40,6 +43,7 @@ var Game = $class({
     },
 
     /**
+     * @access public
      * @param int
      * @param int
      * @return Player|null
@@ -49,23 +53,7 @@ var Game = $class({
     },
 
     /**
-     * @param int
-     * @param int
-     * @param Player
-     */
-    setCoords: function (x, y, player) {
-        this.coords[x][y] = player;
-        $('#game td.last').removeClass('last');
-        var field = this.getField(x, y);
-        if (player.image) {
-            field.addClass('cross');
-        } else {
-            field.addClass('circle');
-        }
-        field.addClass('last');
-    },
-
-    /**
+     * @access public
      * @return void
      */
     tryMove: function (player, x, y) {
@@ -128,6 +116,35 @@ var Game = $class({
     },
 
     /**
+     * @access private
+     * @param int
+     * @param int
+     * @param Player
+     */
+    setCoords: function (x, y, player) {
+        this.coords[x][y] = player;
+        $('#game td.last').removeClass('last');
+        var field = this.getField(x, y);
+        if (player.image) {
+            field.addClass('cross');
+        } else {
+            field.addClass('circle');
+        }
+        field.addClass('last');
+    },
+
+    /**
+     * @access private
+     * @param int
+     * @param int
+     * @return jQuery
+     */
+    getField: function (x, y) {
+        return $('#game tr:eq(' + y + ') > td:eq(' + x +')');
+    },
+
+    /**
+     * @access private
      * @param int
      * @param int
      * @param array
@@ -163,6 +180,7 @@ var Game = $class({
     },
 
     /**
+     * @access private
      * @return void
      */
     draw: function() {
@@ -170,6 +188,7 @@ var Game = $class({
     },
 
     /**
+     * @access private
      * @return void
      */
     end: function() {
@@ -177,21 +196,18 @@ var Game = $class({
         $('#reset').addClass('highlight');
     },
 
-    /**
-     * @return void
-     */
-    run: function () {
-        if (this.actual) this.actual.move();
-    },
-
 });
+
+
 
 /**
  * @class
+ * @abstract
  */
 var Player = $class({
 
     /**
+     * @access public
      * @return void
      */
     constructor: function (game, image) {
@@ -200,11 +216,40 @@ var Player = $class({
     },
 
     /**
+     * @access public
      * @return void
      */
     move: function () {},
 
 });
+
+
+
+/**
+ * @class
+ */
+var Human = $class({
+
+    Extends: Player,
+
+    /**
+     * @access public
+     * @return void
+     */
+    constructor: function() {
+        Player.apply(this, arguments);
+        (function (player) {
+            $('#game td').click(function () {
+                var x = $(this).prevAll().size(),
+                    y = $(this).parent().prevAll().size();
+                player.game.tryMove(player, x, y);
+            });
+        })(this);
+    },
+
+});
+
+
 
 /**
  * @class
@@ -214,6 +259,7 @@ var Computer = $class({
     Extends: Player,
 
     /**
+     * @access public
      * @return void
      */
     constructor: function () {
@@ -221,34 +267,47 @@ var Computer = $class({
     },
 
     /**
-     * @param int
-     * @return int
+     * @access public
+     * @return void
      */
-    scoreDefense: function (count) {
-        switch (count) {
-            case 1: return 20;
-            case 2: return 200;
-            case 3: return 1000;
-            case 4: return 10000;
-            default: return 0;
+    move: function () {
+        var now,
+            fields = [],
+            top = 0;
+        for (var i = 0; i < SIZE; i++) {
+            for (var j = 0; j < SIZE; j++) {
+                if (this.game.getCoords(i, j) != null) continue;
+                now = this.scoreField(i, j);
+                if (top < now) {
+                    top = now;
+                    fields = [];
+                    fields.push([i, j]);
+                }
+                if (top == now) {
+                    fields.push([i, j]);
+                }
+            }
         }
+        now = fields[Math.floor(Math.random() * fields.length)];
+        this.game.tryMove(this, now[0], now[1]);
     },
 
     /**
+     * @access private
+     * @param int
      * @param int
      * @return int
      */
-    scoreAttack: function (count) {
-        switch (count) {
-            case 1: return 10;
-            case 2: return 100;
-            case 3: return 2000;
-            case 4: return 50000;
-            default: return 0;
+    scoreField: function (x, y) {
+        var score = 0;
+        for (var i = 1; i <= 4; i++) {
+            score += this.scoreDirection(x, y, i);
         }
+        return score;
     },
 
     /**
+     * @access private
      * @param int
      * @param int
      * @param int
@@ -302,67 +361,39 @@ var Computer = $class({
     },
 
     /**
-     * @param int
+     * @access private
      * @param int
      * @return int
      */
-    scoreField: function (x, y) {
-        var score = 0;
-        for (var i = 1; i <= 4; i++) {
-            score += this.scoreDirection(x, y, i);
+    scoreAttack: function (count) {
+        switch (count) {
+            case 1: return 10;
+            case 2: return 100;
+            case 3: return 2000;
+            case 4: return 50000;
+            default: return 0;
         }
-        return score;
     },
 
     /**
-     * @return void
+     * @access private
+     * @param int
+     * @return int
      */
-    move: function () {
-        var now,
-            fields = [],
-            top = 0;
-        for (var i = 0; i < SIZE; i++) {
-            for (var j = 0; j < SIZE; j++) {
-                if (this.game.getCoords(i, j) != null) continue;
-                now = this.scoreField(i, j);
-                if (top < now) {
-                    top = now;
-                    fields = [];
-                    fields.push([i, j]);
-                }
-                if (top == now) {
-                    fields.push([i, j]);
-                }
-            }
+    scoreDefense: function (count) {
+        switch (count) {
+            case 1: return 20;
+            case 2: return 200;
+            case 3: return 1000;
+            case 4: return 10000;
+            default: return 0;
         }
-        now = fields[Math.floor(Math.random() * fields.length)];
-        this.game.tryMove(this, now[0], now[1]);
     },
 
 });
 
-/**
- * @class
- */
-var Human = $class({
 
-    Extends: Player,
 
-    /**
-     * @return void
-     */
-    constructor: function() {
-        Player.apply(this, arguments);
-        (function (player) {
-            $('#game td').click(function () {
-                var x = $(this).prevAll().size(),
-                    y = $(this).parent().prevAll().size();
-                player.game.tryMove(player, x, y);
-            });
-        })(this);
-    },
-
-});
 
 $(function () {
 
