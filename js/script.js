@@ -407,9 +407,19 @@ var Computer = $class({
                 score += this.scoreAttack(self);
             else if (self == 0 && opponent == 0)
                 // nikdo zde nemůže vyhrát
-                score++;
+                score += this.scoreEmpty();
         }
         return score;
+    },
+
+    /**
+     * Hodnota prázdné pětice.
+     *
+     * @access private
+     * @return int
+     */
+    scoreEmpty: function () {
+        return 1;
     },
 
     /**
