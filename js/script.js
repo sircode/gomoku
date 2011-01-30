@@ -1,4 +1,7 @@
 /**
+ * Rozměry hracího plánu.
+ *
+ * @todo rozdělit na SIZE_X a SIZE_Y
  * @const
  */
 var SIZE = 19;
@@ -6,6 +9,8 @@ var SIZE = 19;
 
 
 /**
+ * Reprezentuje hrací plán.
+ *
  * @class
  */
 var Game = $class({
@@ -25,6 +30,8 @@ var Game = $class({
     },
 
     /**
+     * Řekne aktuálnímu hráči, že je na tahu.
+     *
      * @access public
      * @return void
      */
@@ -33,6 +40,8 @@ var Game = $class({
     },
 
     /**
+     * Ověří, zda souřadnice jsou na hracím plánu.
+     *
      * @access public
      * @param int
      * @param int
@@ -43,6 +52,8 @@ var Game = $class({
     },
 
     /**
+     * Zjistí, který hráč má svůj symbol na daných souřadnicích.
+     *
      * @access public
      * @param int
      * @param int
@@ -53,6 +64,8 @@ var Game = $class({
     },
 
     /**
+     * Ověří platnost tahu a případný konec hry.
+     *
      * @access public
      * @return void
      */
@@ -65,12 +78,13 @@ var Game = $class({
         var i, j,
             directions = [];
 
+        // vítězsví?
         i = 1;
         j = 1;
         while (this.isValidCoords(x - i, y) && this.getCoords(x - i, y) == player) i++;
         while (this.isValidCoords(x + j, y) && this.getCoords(x + j, y) == player) j++;
         if (i + j == 6) {
-            directions.push(1);
+            directions.push(1); // -
         }
 
         i = 1;
@@ -78,7 +92,7 @@ var Game = $class({
         while (this.isValidCoords(x, y - i) && this.getCoords(x, y - i) == player) i++;
         while (this.isValidCoords(x, y + j) && this.getCoords(x, y + j) == player) j++;
         if (i + j == 6) {
-            directions.push(2);
+            directions.push(2); // |
         }
 
         i = 1;
@@ -86,7 +100,7 @@ var Game = $class({
         while (this.isValidCoords(x - i, y - i) && this.getCoords(x - i, y - i) == player) i++;
         while (this.isValidCoords(x + j, y + j) && this.getCoords(x + j, y + j) == player) j++;
         if (i + j == 6) {
-            directions.push(3);
+            directions.push(3); // \
         }
 
         i = 1;
@@ -94,13 +108,14 @@ var Game = $class({
         while (this.isValidCoords(x - i, y + i) && this.getCoords(x - i, y + i) == player) i++;
         while (this.isValidCoords(x + j, y - j) && this.getCoords(x + j, y - j) == player) j++;
         if (i + j == 6) {
-            directions.push(4);
+            directions.push(4); // /
         }
 
         if (directions.length) {
             this.victory(x, y, directions);
         }
 
+        // remíza?
         var full = true;
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j ++) {
@@ -112,10 +127,13 @@ var Game = $class({
             return;
         }
 
+        // další tah
         this.run();
     },
 
     /**
+     * Umístí hráčův symbol na dané pole.
+     *
      * @access private
      * @param int
      * @param int
@@ -134,6 +152,8 @@ var Game = $class({
     },
 
     /**
+     * Najde pole v DOM.
+     *
      * @access private
      * @param int
      * @param int
@@ -144,6 +164,8 @@ var Game = $class({
     },
 
     /**
+     * Zvýrazní výtězné pětice.
+     *
      * @access private
      * @param int
      * @param int
@@ -180,6 +202,8 @@ var Game = $class({
     },
 
     /**
+     * Hra skončila remízou.
+     *
      * @access private
      * @return void
      */
@@ -188,6 +212,8 @@ var Game = $class({
     },
 
     /**
+     * Konec hry, zvýrazní odkaz na novou hru.
+     *
      * @access private
      * @return void
      */
@@ -201,6 +227,8 @@ var Game = $class({
 
 
 /**
+ * Reprezentuje hráče.
+ *
  * @class
  * @abstract
  */
@@ -216,6 +244,8 @@ var Player = $class({
     },
 
     /**
+     * Hráč je na tahu.
+     *
      * @access public
      * @return void
      */
@@ -226,6 +256,8 @@ var Player = $class({
 
 
 /**
+ * Lidský hráč.
+ *
  * @class
  */
 var Human = $class({
@@ -233,6 +265,8 @@ var Human = $class({
     Extends: Player,
 
     /**
+     * Nastaví všem hracím polím událost onclick.
+     *
      * @access public
      * @return void
      */
@@ -252,6 +286,8 @@ var Human = $class({
 
 
 /**
+ * Virtuální hráč.
+ *
  * @class
  */
 var Computer = $class({
@@ -267,13 +303,15 @@ var Computer = $class({
     },
 
     /**
+     * Vybere nejlepší pole a provede tah.
+     *
      * @access public
      * @return void
      */
     move: function () {
         var now,
-            fields = [],
-            top = 0;
+            top = 0,
+            fields = [];
         for (var i = 0; i < SIZE; i++) {
             for (var j = 0; j < SIZE; j++) {
                 if (this.game.getCoords(i, j) != null) continue;
@@ -288,11 +326,14 @@ var Computer = $class({
                 }
             }
         }
+        // z nejlepších vyber náhodné
         var move = fields[Math.floor(Math.random() * fields.length)];
         this.game.tryMove(this, move[0], move[1]);
     },
 
     /**
+     * Ohodnotí pole.
+     *
      * @access private
      * @param int
      * @param int
@@ -307,6 +348,8 @@ var Computer = $class({
     },
 
     /**
+     * Ohodnotí pole v jednom směru.
+     *
      * @access private
      * @param int
      * @param int
@@ -334,14 +377,17 @@ var Computer = $class({
                 break;
         }
         var score = 0,
-            self, opponent, valid, tx, ty;
-        for (var i = 1; i <= 5; i++) {
+            self, opponent, valid,
+            tx, ty, i, j;
+        for (i = 1; i <= 5; i++) {
             self = 0;
             opponent = 0;
             valid = true;
-            for (var j = 1; j <= 5; j++) {
+            // kolik symbolů v dané pětici mám já a kolik má soupeř
+            for (j = 1; j <= 5; j++) {
                 tx = x + (i + j - 6) * dx;
                 ty = y + (i + j - 6) * dy;
+                // dostali jsme se mimo hrací plán
                 if (!this.game.isValidCoords(tx, ty))
                     valid = false;
                 else if (this.game.getCoords(tx, ty) == this)
@@ -351,16 +397,21 @@ var Computer = $class({
             }
             if (!valid) continue;
             if (opponent > 0 && self == 0)
+                // soupeř zde může vyhrát
                 score += this.scoreDefense(opponent);
             else if (self > 0 && opponent == 0)
+                // já zde mohu vyhrát
                 score += this.scoreAttack(self);
             else if (self == 0 && opponent == 0)
+                // nikdo zde nemůže vyhrát
                 score++;
         }
         return score;
     },
 
     /**
+     * Útočná hodnota.
+     *
      * @access private
      * @param int
      * @return int
@@ -376,6 +427,8 @@ var Computer = $class({
     },
 
     /**
+     * Obranná hodnota.
+     *
      * @access private
      * @param int
      * @return int
@@ -394,14 +447,16 @@ var Computer = $class({
 
 
 
-
+// DOM je připraven
 $(function () {
 
     $('#play').click(function () {
 
+        // zjištění hodnot z formuláře
         var type = $('input:radio[name=type]:checked').val();
         var image = $('input:radio[name=image]:checked').val() == 0;
 
+        // vytvoření objektů
         var game = new Game();
         var player1, player2;
         if (type == 0) {
@@ -418,13 +473,16 @@ $(function () {
         }
         game.player1 = player1;
         game.player2 = player2;
+        // začínající hráč
         game.actual = player1;
 
+        // zobrazení herního plánu
         $('#reset').removeClass('highlight');
         $('#new').css('display', 'none');
         $('#game').css('display', 'block');
         $('#game .victorious').removeClass('victorious');
 
+        // spuštění hry
         game.run();
 
     });
