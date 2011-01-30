@@ -127,8 +127,11 @@ var Game = $class({
             return;
         }
 
+        var player = this;
         // další tah
-        this.run();
+        setTimeout(function () {
+            player.run();
+        }, 1000);
     },
 
     /**
