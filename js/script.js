@@ -431,8 +431,8 @@ var Computer = $class({
      */
     scoreAttack: function (count) {
         switch (count) {
-            case 1: return 10;
-            case 2: return 100;
+            case 1: return 20;
+            case 2: return 200;
             case 3: return 2000;
             case 4: return 50000;
             default: return 0;
@@ -448,8 +448,8 @@ var Computer = $class({
      */
     scoreDefense: function (count) {
         switch (count) {
-            case 1: return 20;
-            case 2: return 200;
+            case 1: return 10;
+            case 2: return 100;
             case 3: return 1000;
             case 4: return 10000;
             default: return 0;
