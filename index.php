@@ -1,8 +1,11 @@
 <?php
+
+//echo __DIR__;
+
 require_once __DIR__ . '/lib/lessc.inc.php';
 require_once __DIR__ . '/lib/Less.php';
 
-$less = new Less('less/style.less', 'css/style.css');
+$less = new Less('./less/style.less', './css/style.css');
 $less->imgPath = '/images/';
 $less->compile(__DIR__ . '/less');
 
@@ -18,28 +21,28 @@ $less->compile(__DIR__ . '/less');
         <title>Gomoku</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="bookmark icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
-        <script src="/js/head.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css" />
+        <script src="./js/head.js"></script>
         <script>
-            head.js('/js/jquery-1.4.4.js', '/js/class.js', '/js/script.js');
+            head.js('./js/jquery-1.4.4.js', './js/class.js', './js/script.js');
         </script>
     </head>
     <body>
 
         <div id="new">
-            <h1>Nová hra</h1>
+            <h1>New game</h1>
             <div class="option">
-                <h2>Typ hry</h2>
-                <input type="radio" name="type" id="form-type-0" value="0" checked="checked" /><label for="form-type-0">hráč vs. počítač</label>
-                <input type="radio" name="type" id="form-type-1" value="1" /><label for="form-type-1">počítač vs. hráč</label>
-                <input type="radio" name="type" id="form-type-2" value="2" /><label for="form-type-2">2 hráči</label>
+                <h2>Game type</h2>
+                <input type="radio" name="type" id="form-type-0" value="0" checked="checked" /><label for="form-type-0">player vs. computer</label>
+                <input type="radio" name="type" id="form-type-1" value="1" /><label for="form-type-1">computer vs. player </label>
+                <input type="radio" name="type" id="form-type-2" value="2" /><label for="form-type-2">2 player</label>
             </div>
             <div class="option begin">
-                <h2>Začínající hráč</h2>
-                <input type="radio" name="image" id="form-image-0" value="0" checked="checked" /><label for="form-image-0"><img src="/img/cross.png" alt="X" title="křížek" /></label>
-                <input type="radio" name="image" id="form-image-1" value="1" /><label for="form-image-1"><img src="/img/circle.png" alt="O" title="kolečko" /></label>
+                <h2>Beginner player</h2>
+                <input type="radio" name="image" id="form-image-0" value="0" checked="checked" /><label for="form-image-0"><img src="./img/cross.png" alt="X" title="cross" /></label>
+                <input type="radio" name="image" id="form-image-1" value="1" /><label for="form-image-1"><img src="./img/circle.png" alt="O" title="circle" /></label>
             </div>
-            <input type="submit" id="play" value="Začít hru">
+            <input type="submit" id="play" value="Start the game">
         </div>
 
         <div id="game">
@@ -57,7 +60,7 @@ $less->compile(__DIR__ . '/less');
                 </tbody>
             </table>
 
-            <a id="reset" href="/">Začít novou hru</a>
+            <a id="reset" href="./">New Game</a>
         </div>
 
     </body>
